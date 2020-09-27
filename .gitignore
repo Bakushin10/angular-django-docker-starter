@@ -1,0 +1,5 @@
+angular/node_modules
+*/__pycache__/*
+*/migrations/*
+.DS_Store
+../.DS_Store

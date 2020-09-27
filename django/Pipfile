@@ -1,0 +1,47 @@
+ [[source]]
+url = "https://pypi.org/simple"
+name = "pypi"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+requests = { version = "==2.21.0", name = "pypi"}
+botocore = { version = "==1.12.115", name = "pypi"}
+dj-database-url = { version = "==0.5.0", name = "pypi"}
+django = { version = "==2.2.6", name = "pypi"}
+django-cors-headers = { version = "==3.0.2", name = "pypi"}
+django-filter = { version = "==2.2.0", name = "pypi"}
+djangorestframework = { version = "==3.10.0", name = "pypi"}
+docutils = { version = "==0.14", name = "pypi"}
+gunicorn = { version = "==19.9.0", name = "pypi"}
+jmespath = { version = "==0.9.4", name = "pypi"}
+pyasn1 = { version = "==0.4.5", name = "pypi"}
+python-dateutil = { version = "==2.8.0", name = "pypi"}
+pytz = { version = "==2019.1", name = "pypi"}
+pyyaml = { version = "==3.13", name = "pypi"}
+rsa = { version = "==3.4.2", name = "pypi"}
+s3transfer = { version = "==0.2.0", name = "pypi"}
+six = { version = "==1.12.0", name = "pypi"}
+sqlparse = { version = "==0.3.0", name = "pypi"}
+urllib3 = { version = "==1.24.3", name = "pyp80pi"}
+pillow = { version = "==6.2.0", name = "pypi"}
+setuptools = { version = "==41.6.0", name = "pypi"}
+coverage = { version = "==4.5.4", name = "pypi"}
+nose = { version = "==1.3.7", name = "pypi"}
+django-redis = { version = "==4.12.1", name = "pypi"}
+
+
+[requires]
+python_version = "3.7"
+
+
+[scripts]
+start = "python manage.py runserver 0.0.0.0:8000"
+makemigrations = "python manage.py makemigrations"
+migrate = "python manage.py migrate"
+build = "python setup.py bdist_wheel"
+createuser = "python manage.py createsuperuser"
+test = "coverage run manage.py test"
+report = "coverage report -m"
+createapp = "python manage.py startapp polls"

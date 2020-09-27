@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  angular-apache2:
+    build:
+      context: ./angular
+    container_name: ${PROJECT_NAME}--angular
+    ports:
+      - '4200:80'
+    volumes:
+      - ./angular/dist/ng7:/var/www/html/dist
+      - ./angular/000-default.conf:/etc/apache2/sites-available/000-default.conf
+
+  nginx-proxy:
+    build:
+      context: ./nginx
+    container_name: ${PROJECT_NAME}--nginx
+    ports:
+      - '8000:8000'
+    # volumes:
+    #   - ./nginx/django.conf:/etc/nginx/conf.d
+    depends_on:
+      - django-api
+
+  django-api:
+    build:
+      context: ./django
+    command: gunicorn data_tracker.wsgi:application --bind 0.0.0.0:8000
+    container_name: ${PROJECT_NAME}--django
+    ports:
+      - '8000'
+    volumes:
+      - ./django:/django
+    depends_on:
+      - postgres-db
+  
+  postgres-db:
+    build:
+      context: ./postgres
+    container_name: ${PROJECT_NAME}--postgres
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}

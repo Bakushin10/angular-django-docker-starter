@@ -1,0 +1,17 @@
+
+<h1>Home</h1>
+<button (click) = firstClick()>
+    click me
+</button>
+<ul *ngIf="users">
+    <li *ngFor="let user of users.data">
+        <img [src]="user.avatar">
+        <div>
+            <p>
+                {{ user.first_name}}
+                {{ user.last_name}}
+                {{ user.email}}
+            </p>
+        </div>
+    </li>
+</ul>
