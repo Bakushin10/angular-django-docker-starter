@@ -1,5 +1,6 @@
 # docker run -t -d angular-django-apache_django-api
 # docker exec -it  bash
+# https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/#project-setup
 
 FROM python:3.7-slim
 ENV DEBIAN_FRONTEND=noninteractive

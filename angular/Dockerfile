@@ -1,7 +1,5 @@
-#
 # docker run -t -d django-apache2-docker_django-apache2
 # docker exec -it container-id bash
-#
 
 FROM ubuntu:18.04
 ENV DEBIAN_FRONTEND=noninteractive
