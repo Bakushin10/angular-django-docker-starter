@@ -23,8 +23,8 @@ This repo is created to speed up the development process and simulate the develo
   
 
 ####  ports
-Angular is running on `localhost:4200`
-Django is running on `localhost:8000`
+- Angular is running on `localhost:4200`
+- Django is running on `localhost:8000`
 
   
 
