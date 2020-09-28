@@ -1,20 +1,33 @@
 # docker run -t -d django-apache2-docker_django-apache2
 # docker exec -it container-id bash
 
-FROM ubuntu:18.04
+FROM centos:7
+
+ENV container docker
+RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
+    systemd-tmpfiles-setup.service ] || rm -f $i; done); \
+    rm -f /lib/systemd/system/multi-user.target.wants/*;\
+    rm -f /etc/systemd/system/*.wants/*;\
+    rm -f /lib/systemd/system/local-fs.target.wants/*; \
+    rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
+    rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
+    rm -f /lib/systemd/system/basic.target.wants/*;\
+    rm -f /lib/systemd/system/anaconda.target.wants/*;
+
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y \
+RUN yum -y --enablerepo=extras install epel-release && yum clean all && yum -y update && \
+    yum install -y \
     #apt-utils \
     #vim \
     #curl \
     #nano \
-    apache2 \
-    apache2-utils
+    httpd 
 
 # Copy apache config
-COPY ./000-default.conf /etc/apache2/sites-available/000-default.conf
+# COPY ./000-default.conf /etc/httpd/sites-available/000-default.conf
+
 # Copy angular artifacts
-COPY ./dist/ng7 /var/www/html/dist
+COPY ./dist/ng7 /var/www/html
 
 EXPOSE 80
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+CMD ["/usr/sbin/httpd","-D","FOREGROUND"]

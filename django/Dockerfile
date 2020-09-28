@@ -2,23 +2,8 @@
 # docker exec -it  bash
 # https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/#project-setup
 
-FROM python:3.7-slim
-ENV DEBIAN_FRONTEND=noninteractive
+FROM centos/python-36-centos7
 ENV APP_HOME=/django
-RUN apt-get update && apt-get install -y \
-	# apt-utils \
-	# vim \
-	# curl \
-	# apache2 \
-	# apache2-utils \
-	libpq-dev \
-	python3-dev \
-	gcc \
-	libapache2-mod-wsgi-py3 \
-	nano
-
 COPY . $APP_HOME
 WORKDIR $APP_HOME
 RUN pip install -r requirements.txt
-
-#ENTRYPOINT ["/home/app/web/entrypoint.prod.sh"]
