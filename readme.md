@@ -22,13 +22,13 @@ This repo is created to speed up the development process and simulate the develo
 
   
 
-###  ports
+####  ports
 Angular is running on `localhost:4200`
 Django is running on `localhost:8000`
 
   
 
-###  other `docker-compose` command
+####  other docker-compose command
 
 -  `docker-compose up -d` run containers in detached mode
 -  `docker-compose up -d repository-name` run specified containers
