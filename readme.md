@@ -42,17 +42,17 @@ This repo is created to speed up the development process and simulate the develo
   
 
 ##  Container Architecture
-
+Angualr :  http://localhost/web/
+Django : http://localhost/api/data/
   
 
 ```mermaid
 
 graph LR
 
-A(Angular) --> B(nginx)
-
+A(client) --> B(nginx)
+B --> C(angular)
 B --> D(Django)
-
-D --> F(DB)
+D --> E(DB)
 
 ```
