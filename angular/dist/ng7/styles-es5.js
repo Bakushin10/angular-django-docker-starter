@@ -18,7 +18,7 @@
 
     exports.push([module.i, "/* You can add global styles to this file, and also import other style files */", "", {
       "version": 3,
-      "sources": ["/Users/shin/workspace/angular/ng7/src/styles.sass"],
+      "sources": ["/Users/shin/workspace/gitlab/dcp-container-python-poc/angular/src/styles.sass"],
       "names": [],
       "mappings": "AAAA,8EAAA",
       "file": "styles.sass",
@@ -464,7 +464,7 @@
   /***/
   function _(module, exports, __webpack_require__) {
     module.exports = __webpack_require__(
-    /*! /Users/shin/workspace/angular/ng7/src/styles.sass */
+    /*! /Users/shin/workspace/gitlab/dcp-container-python-poc/angular/src/styles.sass */
     "./src/styles.sass");
     /***/
   }

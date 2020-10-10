@@ -15,13 +15,17 @@ RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
     rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 ENV DEBIAN_FRONTEND=noninteractive
-RUN yum -y --enablerepo=extras install epel-release && yum clean all && yum -y update && \
+RUN yum -y update && \
     yum install -y \
     #apt-utils \
     #vim \
     #curl \
     #nano \
-    httpd 
+    httpd \
+    && yum clean all \
+    && rm /tmp/* \
+    && rm -rf /var/cache/yum
+
 
 # Copy apache config
 # COPY ./000-default.conf /etc/httpd/sites-available/000-default.conf

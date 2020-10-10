@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.urls import path, include  # New
 from django.contrib import admin
+#
+# api/v1/ maps to api/ in reverse proxy (nginx)
+#
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('todos.urls')),
-    path('data/', include('data_api.urls')),
+    path('api/v1/api/', include('todos.urls')),
+    path('api/v1/data/', include('data_api.urls')),
 ]
