@@ -2,52 +2,52 @@ version: "3"
 
 services:
 
-  reverse-proxy:
+  nginx:
     build:
       context: ./nginx
-    container_name: ${PROJECT_NAME}--nginx
+    container_name: ${PROJECT_NAME}--nginx-rp
     ports:
       - '8000:8000'
       - '80:80'
     # volumes:
     #   - ./nginx/django.conf:/etc/nginx/conf.d
     depends_on:
-      - django-api
-      - angular-apache2
+      - django
+      - angular
 
   #
   # add 0.0.0.0 dcp-python.com in /etc/hosts
   # http://localhost/web/
   # also map to http://dcp-python.com
   # 
-  angular-apache2:
+  angular:
     build:
       context: ./angular
-    container_name: ${PROJECT_NAME}--angular
+    container_name: ${PROJECT_NAME}--angular-front
     ports:
       - '80'
     volumes:
       - ./angular/dist/ng7:/var/www/html
       - ./config/apache/angular-000-default.conf:/etc/apache2/sites-available/000-default.conf
 
-  django-api:
+  django:
     build:
       context: ./django
     command: gunicorn data_tracker.wsgi:application --bind 0.0.0.0:8000
     #command: systemctl restart apache2
-    container_name: ${PROJECT_NAME}--django
+    container_name: ${PROJECT_NAME}--django-api
     ports:
       - '8000'
     volumes:
       - ./django:/django
       - ./config/apache/django-000-default.conf:/etc/apache2/sites-available/000-default.conf
     depends_on:
-      - postgres-db
+      - postgres
   
-  postgres-db:
+  postgres:
     build:
       context: ./postgres
-    container_name: ${PROJECT_NAME}--postgres
+    container_name: ${PROJECT_NAME}--postgres-db
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}

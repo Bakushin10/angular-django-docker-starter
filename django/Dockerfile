@@ -1,4 +1,4 @@
-# docker run -t -d dcp-container-python-poc_django-api
+# docker run -t -d dcp-container-python-poc_django
 # docker exec -it  bash
 # https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/#project-setup
 

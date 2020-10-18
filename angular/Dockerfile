@@ -1,6 +1,12 @@
 # docker run -t -d django-apache2-docker_django-apache2
 # docker exec -it container-id bash
 
+FROM node:12.19-alpine AS builder
+ENV APP_HOME=/src
+WORKDIR $APP_HOME
+COPY . .
+RUN npm install && npm run build
+
 FROM centos:7
 
 ENV container docker
@@ -31,7 +37,8 @@ RUN yum -y update && \
 # COPY ./000-default.conf /etc/httpd/sites-available/000-default.conf
 
 # Copy angular artifacts
-COPY ./dist/ng7 /var/www/html
+COPY --from=builder /src/dist/ng7 /var/www/html
+#COPY ./dist/ng7 /var/www/html
 
 EXPOSE 80
 CMD ["/usr/sbin/httpd","-D","FOREGROUND"]
