@@ -7,8 +7,10 @@ services:
       context: ./nginx
     container_name: ${PROJECT_NAME}--nginx-rp
     ports:
-      - '8000:8000'
-      - '80:80'
+      #- '8000:8000' # django
+      #- '80:80'     # angular 
+      - '85:85'
+
     # volumes:
     #   - ./nginx/django.conf:/etc/nginx/conf.d
     depends_on:
