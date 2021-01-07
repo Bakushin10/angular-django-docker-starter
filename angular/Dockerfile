@@ -1,44 +1,20 @@
-# docker run -t -d django-apache2-docker_django-apache2
-# docker exec -it container-id bash
+# 
+# nginx setting for k8s
+#
 
-FROM node:12.19-alpine AS builder
+FROM node:12.14.1-slim AS builder
 ENV APP_HOME=/src
 WORKDIR $APP_HOME
 COPY . .
 RUN npm install && npm run build
 
-FROM centos:7
+# base image nginx
+FROM nginx:1.19.0-alpine
+ENV PROJECT_NAME=ng7
 
-ENV container docker
-RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
-    systemd-tmpfiles-setup.service ] || rm -f $i; done); \
-    rm -f /lib/systemd/system/multi-user.target.wants/*;\
-    rm -f /etc/systemd/system/*.wants/*;\
-    rm -f /lib/systemd/system/local-fs.target.wants/*; \
-    rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
-    rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
-    rm -f /lib/systemd/system/basic.target.wants/*;\
-    rm -f /lib/systemd/system/anaconda.target.wants/*;
-
-ENV DEBIAN_FRONTEND=noninteractive
-RUN yum -y update && \
-    yum install -y \
-    #apt-utils \
-    #vim \
-    #curl \
-    #nano \
-    httpd \
-    && yum clean all \
-    && rm /tmp/* \
-    && rm -rf /var/cache/yum
-
-
-# Copy apache config
-# COPY ./000-default.conf /etc/httpd/sites-available/000-default.conf
-
-# Copy angular artifacts
-COPY --from=builder /src/dist/ng7 /var/www/html
-#COPY ./dist/ng7 /var/www/html
+COPY --from=builder /src/dist/$PROJECT_NAME /src/$PROJECT_NAME
+COPY --from=builder /src/config/nginx/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
-CMD ["/usr/sbin/httpd","-D","FOREGROUND"]
+CMD ["nginx", "-g", "daemon off;"]
+# docker build -f Dockerfile.nginx -t angular-django-starter-api .
