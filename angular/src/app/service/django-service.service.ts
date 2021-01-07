@@ -10,6 +10,7 @@ export class DjangoService {
     constructor(private http: HttpClient) { }
 
     getDataFromDjango() {
+        console.log("calling api..")
         const url = environment.apiBase + "data/"
         return this.http.get(url);
     }

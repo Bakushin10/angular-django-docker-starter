@@ -6,43 +6,31 @@ services:
     build:
       context: ./nginx
     container_name: ${PROJECT_NAME}--nginx-rp
+    image: ${IMAGE_NAME}-nginx
     ports:
-      #- '8000:8000' # django
-      #- '80:80'     # angular 
       - '85:85'
-
-    # volumes:
-    #   - ./nginx/django.conf:/etc/nginx/conf.d
     depends_on:
       - django
       - angular
 
-  #
-  # add 0.0.0.0 dcp-python.com in /etc/hosts
-  # http://localhost/web/
-  # also map to http://dcp-python.com
-  # 
   angular:
     build:
       context: ./angular
     container_name: ${PROJECT_NAME}--angular-front
+    image: ${IMAGE_NAME}-angular
     ports:
-      - '80'
+      - '80:80'
     volumes:
-      - ./angular/dist/ng7:/var/www/html
+      # - ./angular/dist/ng7:/var/www/html
       - ./config/apache/angular-000-default.conf:/etc/apache2/sites-available/000-default.conf
 
   django:
     build:
       context: ./django
-    command: gunicorn data_tracker.wsgi:application --bind 0.0.0.0:8000
-    #command: systemctl restart apache2
     container_name: ${PROJECT_NAME}--django-api
+    image: ${IMAGE_NAME}-django
     ports:
       - '8000'
-    volumes:
-      - ./django:/django
-      - ./config/apache/django-000-default.conf:/etc/apache2/sites-available/000-default.conf
     depends_on:
       - postgres
   

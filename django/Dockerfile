@@ -41,6 +41,4 @@ RUN yum -y update && yum -y install \
     && python3.6 -m ensurepip
 
 WORKDIR $APP_HOME
-
-#ENTRYPOINT ["/home/app/web/entrypoint.prod.sh"]
-#CMD ["/usr/sbin/httpd","-D","FOREGROUND"]
+CMD ["gunicorn", "data_tracker.wsgi:application", "--bind", "0.0.0.0:8000"]
